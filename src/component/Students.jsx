@@ -5,7 +5,7 @@ function Students() {
     return (
         <div>
             <Navbar/>
-            Students
+           
             <Footer/>
         </div>
     )
