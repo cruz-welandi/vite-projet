@@ -10,7 +10,7 @@ function Students() {
 
     useEffect (() => {
         Axios
-            .get("https://vite-projet-nine.vercel.app/")
+            .get("http://localhost:1337/api/eleves")
             .then((response) => setDataEleve(response.data.data))
             .catch((error) => setError(error));
     }, []);
