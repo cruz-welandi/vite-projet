@@ -10,14 +10,19 @@ function Students() {
 
     useEffect (() => {
         Axios
-            .get("http://localhost:1337/api/eleves")
-            .then((response) => setDataEleve(response.data.data))
+            .get("http://localhost:1337/api/eleves?populate=*")
+            .then((response) =>{
+                setDataEleve(response.data.data);
+                console.log(response);
+            })
             .catch((error) => setError(error));
     }, []);
 
     if (error) {
         return <div>An error occured: {error.message}</div>;
     }
+
+    console.log(dataEleve)
    
 
     return (
@@ -30,25 +35,25 @@ function Students() {
                 </caption>
                 <thead className="uppercase bg-gray-50">
                     <tr className="px-3 py-2 flex  gap-x-5">
-                        <th  scope="col" className="">Nom(s)</th>
-                        <th  scope="col" className="">Prenom(s)</th>
-                        <th  scope="col" className="">Adresse mail</th>
-                        <th  scope="col" className="">Classe</th>
-                        <th  scope="col" className="">Numéro de telephone</th>
-                        <th  scope="col" className="">Genre</th>
+                        <th  scope="col">Nom(s)</th>
+                        <th  scope="col">Prenom(s)</th>
+                        <th  scope="col">Adresse mail</th>
+                        <th  scope="col">Classe</th>
+                        <th  scope="col">Numéro de telephone</th>
+                        <th  scope="col">Genre</th>
                     </tr>
                 </thead>
                 <tbody>
                     {dataEleve.map(({id,attributes}) => (
                         <tr key={id} className=" border-b px-3 py-3  flex justify-between">
-                            <td scope="row" className="">{attributes.nom}</td>
-                            <td scope="row" className="">{attributes.prenom}</td>
-                            <td scope="row" className="">{attributes.email}</td>
-                            <td scope="row" className="">{attributes.libeleClasse}</td>
-                            <td scope="row" className="">{attributes.phone}</td>
-                            <td scope="row" className="">{attributes.genre}</td>
+                            <td scope="row" >{attributes.nom}</td>
+                            <td scope="row" >{attributes.prenom}</td>
+                            <td scope="row" >{attributes.email}</td>
+                            <td scope="row" >{attributes.classe.data.attributes.libele}</td>
+                            <td scope="row">{attributes.phone}</td>
+                            <td scope="row">{attributes.genre}</td>
                         </tr>
-                    ))}
+                        ))}
                 </tbody>
                 </table>
             </div>

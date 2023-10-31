@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect,useState} from "react";
 import Axios from 'axios';
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -9,7 +9,7 @@ function Login() {
         prenom: '',
         email: '',
         phone: '',
-        libeleClasse: '',
+        classe: '',
         genre: '',
     });
 
@@ -19,11 +19,13 @@ function Login() {
     };
 
     const handleSubmit = async (e) => {
+
+        console.log(data)
         e.preventDefault();
 
         try {
             // Envoie les données du formulaire à l'API Strapi
-            const response = await Axios.post('http://localhost:1337/api/eleves', {data});
+            const response = await Axios.post('http://localhost:1337/api/eleves?populate=*', {data});
             console.log('Réponse de l\'API Strapi :', response.data);
         } catch (error) {
             if (error.response) {
@@ -39,6 +41,23 @@ function Login() {
           }
 
     };
+
+    const[error, setError] = useState(null);
+    const[dataClasse, setDataClasse] = useState([]);
+
+    useEffect (() => {
+        Axios
+            .get("http://localhost:1337/api/classes")
+            .then((response) => {setDataClasse(response.data.data);
+            console.log(response)})
+            .catch((error) => setError(error));
+    }, []);
+
+    if (error) {
+        // Print errors if any
+        return <div>An error occured: {error.message}</div>;
+      }
+
 
     return (
         <div>
@@ -71,11 +90,18 @@ function Login() {
                             </label>
                             <input type="text" name="phone" value={data.phone} onChange={handleChange} className="bg-gray-300 rounded h-10"/>
                         </div>
-                        <div className="flex  flex-col gap-y-2 w-[200px]">
+                        <div className="flex gap-x-4">
                             <label>
                                 Classe
                             </label>
-                            <input type="text" name="libeleClasse" value={data.libeleClasse} onChange={handleChange} className="bg-gray-300 rounded h-10"/>
+                        <select name="classe" onChange={handleChange} className="bg-gray-300 rounded w-[60px]">
+                        <option>slectionner une classe</option>
+                                {dataClasse.map(({id, attributes}) => (
+                                    <option key={id} value={id} >
+                                        {attributes.libele}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         <div className="flex gap-x-5 ">
                             <div className="flex gap-x-3">
