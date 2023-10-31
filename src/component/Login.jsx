@@ -23,7 +23,7 @@ function Login() {
 
         try {
             // Envoie les données du formulaire à l'API Strapi
-            const response = await Axios.post('http://localhost:1337/api/eleves', {data});
+            const response = await Axios.post('https://vite-projet-nine.vercel.app/', {data});
             console.log('Réponse de l\'API Strapi :', response.data);
         } catch (error) {
             if (error.response) {
