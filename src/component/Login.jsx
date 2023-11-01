@@ -38,7 +38,16 @@ function Login() {
               // Une autre erreur s'est produite
               console.error('Erreur lors de la requête:', error.message);
             }
-          }
+          };
+
+          setData({
+            nom: '',
+            prenom: '',
+            email: '',
+            phone: '',
+            classe: '',
+            genre: '',
+          });
 
     };
 
@@ -95,7 +104,7 @@ function Login() {
                                 Classe
                             </label>
                         <select name="classe" onChange={handleChange} className="bg-gray-300 rounded w-[60px]">
-                        <option>slectionner une classe</option>
+                                <option>slectionner une classe</option>
                                 {dataClasse.map(({id, attributes}) => (
                                     <option key={id} value={id} >
                                         {attributes.libele}
