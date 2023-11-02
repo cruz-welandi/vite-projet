@@ -8,6 +8,7 @@ import './index.css'
 import Home from './component/Home';
 import Students from './component/Students';
 import Login from './component/Login';
+import Classe from './component/Classe';
 
 const router = createBrowserRouter ([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter ([
     path: "/login",
     element: <Login/>
   },
+  {
+    path: "/classe",
+    element: <Classe/>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

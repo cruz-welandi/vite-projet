@@ -3,6 +3,7 @@ import Footer from "./Footer";
 import React, { useEffect, useState } from "react";
 import Axios from 'axios';
 import ReactLoading from 'react-loading';
+import {Link} from 'react-router-dom'
 
 function Students() {
         
@@ -14,9 +15,9 @@ function Students() {
     useEffect (() => {
         setLoading(true); // le chargement commence
         Axios
-            .get("http://localhost:1337/api/eleves?populate=*")
+            .get("http://192.168.1.140:2500/api/eleves")
             .then((response) =>{
-                setDataEleve(response.data.data);
+                setDataEleve(response.data);
                 console.log(response);
                 setLoading(false); // le chargement est terminé
             })
@@ -37,7 +38,7 @@ function Students() {
     return (
         <div>
             <Navbar/>
-            <div className="flex justify-center p-4">
+            <div className="flex  gap-x-10 justify-center p-4">
                 <table >
                 <caption className="font-bold text-2xl mb-4">
                         Liste des élèves enregisté
@@ -65,19 +66,20 @@ function Students() {
                                 </tbody>
                         ) : (
                             <tbody>
-                                {dataEleve.map(({id,attributes}) => (
-                                    <tr key={id} className=" border-b px-3 py-3  flex justify-between">
-                                        <td scope="row" >{attributes.nom}</td>
-                                        <td scope="row" >{attributes.prenom}</td>
-                                        <td scope="row" >{attributes.email}</td>
-                                        <td scope="row" >{attributes.classe.data.attributes.libele}</td>
-                                        <td scope="row">{attributes.phone}</td>
-                                        <td scope="row">{attributes.genre}</td>
+                                {dataEleve.map((student) => (
+                                    <tr key={student.id} className=" border-b px-3 py-3  flex justify-between">
+                                        <td scope="row" >{student.nom}</td>
+                                        <td scope="row" >{student.prenom}</td>
+                                        <td scope="row" >{student.email}</td>
+                                        <td scope="row" >{student.classe.libelle}</td>
+                                        <td scope="row">{student.ville}</td>
+                                        <td scope="row">{student.sexe}</td>
                                     </tr>
                                 ))}
                             </tbody>
                     )}
                 </table>
+                <Link className="mb-0  py-2 px-2 bg-cyan-200 text-xl h-[50px] rounded" to={'/Login'}>+ Ajouter un nouvel élève</Link>
             </div>
             <Footer/>
         </div>
