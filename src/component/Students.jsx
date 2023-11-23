@@ -3,21 +3,20 @@ import Footer from "./Footer";
 import React, { useEffect, useState } from "react";
 import Axios from 'axios';
 import ReactLoading from 'react-loading';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
 
 function Students() {
         
     const [error, setError] = useState(null);
     const [dataEleve, setDataEleve] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [count, setCount] = useState(1)
 
     useEffect (() => {
         setLoading(true); // le chargement commence
         Axios
-            .get("http://192.168.1.140:2500/api/eleves")
+            .get("http://backend-ecole-241.onrender.com/")
             .then((response) =>{
-                setDataEleve(response.data);
+                setDataEleve(response.data.data);
                 console.log(response);
                 setLoading(false); // le chargement est terminé
             })
@@ -39,19 +38,18 @@ function Students() {
         <div>
             <Navbar/>
             <div className="flex  gap-x-10 justify-center p-4">
-                <table >
+                <table className="border-2">
                 <caption className="font-bold text-2xl mb-4">
                         Liste des élèves enregisté
                 </caption>
-                <thead className="uppercase bg-gray-50">
-                    <tr className="px-3 py-2 flex  gap-x-5">
-                        <th></th>
+                <thead className="uppercase bg-gray-50 border-2">
+                    <tr className="px-3 py-2 flex  gap-x-5 border-2">
                         <th  scope="col">Nom(s)</th>
                         <th  scope="col">Prenom(s)</th>
-                        <th  scope="col">Adresse mail</th>
-                        <th  scope="col">Classe</th>
+                        <th  scope="col" >Adresse mail</th>
+                        <th  scope="col" >Classe</th>
                         <th  scope="col">Numéro de telephone</th>
-                        <th  scope="col">Genre</th>
+                        <th  scope="col" >Genre</th>
                     </tr>
                 </thead>
                     {
@@ -65,15 +63,15 @@ function Students() {
                                         </tr>
                                 </tbody>
                         ) : (
-                            <tbody>
-                                {dataEleve.map((student) => (
-                                    <tr key={student.id} className=" border-b px-3 py-3  flex justify-between">
-                                        <td scope="row" >{student.nom}</td>
-                                        <td scope="row" >{student.prenom}</td>
-                                        <td scope="row" >{student.email}</td>
-                                        <td scope="row" >{student.classe.libelle}</td>
-                                        <td scope="row">{student.ville}</td>
-                                        <td scope="row">{student.sexe}</td>
+                            <tbody className="border-2">
+                                {dataEleve.map(({id, attributes}) => (
+                                    <tr key={id} className=" px-3 py-3  flex justify-between border-2">
+                                        <td scope="row" >{attributes.nom}</td>
+                                        <td scope="row" >{attributes.prenom}</td>
+                                        <td scope="row" >{attributes.email}</td>
+                                        <td scope="row" >{attributes.classe.data.attributes.libele}</td>
+                                        <td scope="row">{attributes.phone}</td>
+                                        <td scope="row" >{attributes.genre}</td>
                                     </tr>
                                 ))}
                             </tbody>

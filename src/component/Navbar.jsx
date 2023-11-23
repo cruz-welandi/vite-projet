@@ -9,6 +9,7 @@ function Navbar() {
                 <Link to={'/Students'} className="text-2xl font-semiblod">Students</Link>
                 <Link to={'/Login'} className="text-2xl font-semiblod">Ajouter un élève</Link>
                 <Link to={'/Classe'} className="text-2xl font-semiblod">Classe</Link>
+                <Link to={'/Moyenne'} className="text-2xl font-semiblod">Moyenne</Link>
             </ul>
         </div>
     )

@@ -9,6 +9,7 @@ import Home from './component/Home';
 import Students from './component/Students';
 import Login from './component/Login';
 import Classe from './component/Classe';
+import Moyenne from './component/Moyenne';
 
 const router = createBrowserRouter ([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter ([
   {
     path: "/classe",
     element: <Classe/>
+  },
+  {
+    path: "/moyenne",
+    element: <Moyenne/>
   }
 ]);
 
